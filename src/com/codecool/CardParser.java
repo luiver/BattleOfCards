@@ -38,7 +38,7 @@ public class CardParser {
     }
 
     public void parseCards() {
-        this.loadXmlDocument("Cards.xml");
+        this.loadXmlDocument("data/Cards.xml");
         NodeList nlist = doc.getElementsByTagName("Card");
 
         for (int i = 0; i < nlist.getLength(); i++) {
@@ -74,6 +74,7 @@ public class CardParser {
             String id = evalElement.getAttribute("id");
             int value = Integer.parseInt(evalElement.getTextContent());
             card.setCardStatsById(id, value);
+            System.out.println(card.getCardName()); //add to test
         }
     }
 }
