@@ -4,6 +4,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 
 public class CardParser {
     private Deck deck;
@@ -12,6 +15,14 @@ public class CardParser {
     public CardParser(){
         this.deck = new Deck();
         parseCards();
+    }
+
+    public Document getDoc() {
+        return this.doc;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 
     protected void loadXmlDocument(String path) {
@@ -26,12 +37,8 @@ public class CardParser {
         }
     }
 
-    public Document getDoc() {
-        return this.doc;
-    }
-
-    private void parseCards() {
-        this.loadXmlDocument("Cards.xml");
+    public void parseCards() {
+        this.loadXmlDocument("data/Cards.xml");
         NodeList nlist = doc.getElementsByTagName("Card");
 
         for (int i = 0; i < nlist.getLength(); i++) {
@@ -67,6 +74,7 @@ public class CardParser {
             String id = evalElement.getAttribute("id");
             int value = Integer.parseInt(evalElement.getTextContent());
             card.setCardStatsById(id, value);
+            System.out.println(card.getCardName()); //add to test
         }
     }
 }
