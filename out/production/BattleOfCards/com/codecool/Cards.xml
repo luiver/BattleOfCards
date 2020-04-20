@@ -179,6 +179,7 @@
         <Eval id="intelligence">13</Eval>
         <Eval id="agility">14</Eval>
     </Evals>
+    </Card>
     <Card id="#019">
     <Description value="Krzyżowiec"/>
     <Evals>
@@ -187,6 +188,7 @@
         <Eval id="intelligence">13</Eval>
         <Eval id="agility">12</Eval>
     </Evals>
+    </Card>
     <Card id="#020">
     <Description value="Najemnik"/>
     <Evals>
@@ -195,4 +197,5 @@
         <Eval id="intelligence">17</Eval>
         <Eval id="agility">16</Eval>
     </Evals>
+    </Card>
 </Cards>
