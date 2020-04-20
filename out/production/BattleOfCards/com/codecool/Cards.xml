@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Cards>
+    <Card id="#001">
+        <Description value="Ace"/>
+        <Evals>
+            <Eval id="attack">15</Eval>
+            <Eval id="defence">13</Eval>
+            <Eval id="intelligence">13</Eval>
+            <Eval id="agility">14</Eval>
+        </Evals>
+    </Card>
+    ...
+    <Card id="#002">
+        <Description value="King"/>
+        <Evals>
+            <Eval id="attack">14</Eval>
+            <Eval id="defence">14</Eval>
+            <Eval id="intelligence">13</Eval>
+            <Eval id="agility">11</Eval>
+        </Evals>
+    </Card>
+</Cards>
