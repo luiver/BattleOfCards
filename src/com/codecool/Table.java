@@ -12,7 +12,7 @@ public class Table {
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
         this.sideCards = new ArrayList<>();
-        this.playerList = new ArrayList<Player>();
+        this.playerList = new ArrayList<>();
         playerList.add(new Dealer());
         createHumanPlayer();
     }
@@ -36,11 +36,11 @@ public class Table {
     public void playCards() {
         int numberOfPlayers = playerList.size();
         int cardsInDeck = deck.getCards().size();
-        int numberOfCardsForPlayers = cardsInDeck % numberOfPlayers == 0 ? cardsInDeck : cardsInDeck - (cardsInDeck % numberOfPlayers) ;
+        int numberOfCardsForPlayers = cardsInDeck % numberOfPlayers == 0 ? cardsInDeck : cardsInDeck - (cardsInDeck % numberOfPlayers);
 
-        if (numberOfPlayers%2==0) {
-            for (int i = 0; i < numberOfCardsForPlayers; i++){
-                if(i%2==0){
+        if (numberOfPlayers % 2 == 0) {
+            for (int i = 0; i < numberOfCardsForPlayers; i++) {
+                if (i % 2 == 0) {
                     playerList.get(0).getHand().addCard(deck.getCards().get(i));
                 } else {
                     playerList.get(1).getHand().addCard(deck.getCards().get(i));
@@ -51,7 +51,7 @@ public class Table {
 
     }
 
-    public void createHumanPlayer(){
+    public void createHumanPlayer() {
         playerList.add(new HumanPlayer());
     }
 }

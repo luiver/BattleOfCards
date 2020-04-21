@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class HumanPlayer extends Player {
     HumanPlayer() {
         super();
-        Scanner scanner = new Scanner(System.in);
-        name = scanner.nextLine();
+        this.name = createPlayerName();
     }
+
     public int chooseCardStatToCompare() { // TODO: 21.04.2020 somehow print stats names to user
         Map<Integer, String> statChoice = makeChoiceMap();
         boolean isRunning = true;
@@ -24,12 +24,19 @@ public class HumanPlayer extends Player {
         return 0;
     }
 
-private Map<Integer, String> makeChoiceMap() {
-    Map<Integer, String> statChoice = new HashMap<>();
-    statChoice.put(1, "Attack");
-    statChoice.put(2, "Defence");
-    statChoice.put(3, "Intelligence");
-    statChoice.put(4, "Agility");
-    return statChoice;
-}
+    private Map<Integer, String> makeChoiceMap() {
+        Map<Integer, String> statChoice = new HashMap<>();
+        statChoice.put(1, "Attack");
+        statChoice.put(2, "Defence");
+        statChoice.put(3, "Intelligence");
+        statChoice.put(4, "Agility");
+        return statChoice;
+    }
+
+    private String createPlayerName() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your Nickname: ");
+        name = scanner.nextLine();
+        return name;
+    }
 }
