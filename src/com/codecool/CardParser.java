@@ -74,7 +74,7 @@ public class CardParser {
             String id = evalElement.getAttribute("id");
             int value = Integer.parseInt(evalElement.getTextContent());
             card.setCardStatsById(id, value);
-            System.out.println(card.getCardName()); //add to test
+            //System.out.println(card.getValueById("attack")); //add to test
         }
     }
 }
