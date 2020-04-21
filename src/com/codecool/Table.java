@@ -52,6 +52,7 @@ public class Table {
     }
 
     public void createHumanPlayer(){
+        //todo choose number of players with dealer
         playerList.add(new HumanPlayer());
     }
 }
