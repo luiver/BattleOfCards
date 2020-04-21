@@ -8,6 +8,7 @@ public class Table {
     Deck deck;
     List<Player> playerList;
     List<Card> sideCards;
+    int numberOfPlayers = playerList.size();
 
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
@@ -34,7 +35,6 @@ public class Table {
     }
 
     public void playCards() {
-        int numberOfPlayers = playerList.size();
         int cardsInDeck = deck.getCards().size();
         int numberOfCardsForPlayers = cardsInDeck % numberOfPlayers == 0 ? cardsInDeck : cardsInDeck - (cardsInDeck % numberOfPlayers);
 
@@ -53,5 +53,44 @@ public class Table {
 
     public void createHumanPlayer() {
         playerList.add(new HumanPlayer());
+    }
+
+    public void playGame(){
+        switch (numberOfPlayers) {
+            case 2:
+                dealerVsPlayer();
+                break;
+            case 3:
+                //dealerVs2Players
+                break;
+            case 4:
+                //dealerVs3Players
+                break;
+            default:
+                //exit?
+        }
+    }
+
+    private void dealerVsPlayer(){
+        Player dealer = getPlayerList().get(0);
+        Player player = getPlayerList().get(1);
+        Hand dealerHand = dealer.getHand();
+        Hand playerHand = player.getHand();
+        boolean hasDealerCards = dealerHand.getIterator().hasNext();
+        boolean hasPlayerCards = playerHand.getIterator().hasNext();
+        String result;
+
+        while (hasDealerCards && hasPlayerCards){
+            //todo do while both players have not empty hands, carry on turns and compare cards
+
+        }
+
+        if (!hasPlayerCards) {
+            result = dealer.getName();
+        } else {
+            result = player.getName();
+        }
+
+        System.out.println("The Winner is :" + result);
     }
 }
