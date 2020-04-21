@@ -38,4 +38,8 @@ public class Hand {
     public Iterator<Card> getIterator() {
         return this.cardIterator;
     }
+
+    public List<Card> getCardsOnHand() {
+        return cardsOnHand;
+    }
 }
