@@ -84,12 +84,7 @@ public class Table {
             //todo do while both players have not empty hands, carry on turns and compare cards
 
         }
-
-        if (!hasPlayerCards) {
-            result = dealer.getName();
-        } else {
-            result = player.getName();
-        }
+        result = !hasPlayerCards ? dealer.getName() : player.getName();
 
         System.out.println("The Winner is :" + result);
     }
