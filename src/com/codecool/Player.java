@@ -1,13 +1,17 @@
 package com.codecool;
 
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Player {
     private Hand hand;
-    private String name;
+    protected String name;
+    Player() {
+        this.hand = new Hand();
+    }
 
     public Card getTopCard() {
-        return hand.getCards()[0];
+        return hand.getCardsOnHand().get(0);
     }
     public void addCardsToBottomOfHand(List<Card> cardList) {
         for (Card card: cardList) {
