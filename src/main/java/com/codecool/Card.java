@@ -30,4 +30,7 @@ public class Card {
     public String getCardName() {
         return this.cardName;
     }
+    public Map<String, Integer> getStats() {
+        return this.stats;
+    }
 }
