@@ -28,4 +28,8 @@ public abstract class Player {
     }
 
     public abstract String chooseCardStatToCompare();
+
+    public void removeTopCard(){
+        hand.getCardsOnHand().remove(0);
+    }
 }

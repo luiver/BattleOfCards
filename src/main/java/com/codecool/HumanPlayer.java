@@ -20,7 +20,7 @@ public class HumanPlayer extends Player {
             printStatsToChoose(statChoice);
             input = Integer.parseInt(scanner.nextLine());
             if (0 < input && input < 5) {
-                scanner.close();
+                //scanner.close();
                 isRunning = false;
             }
         }
