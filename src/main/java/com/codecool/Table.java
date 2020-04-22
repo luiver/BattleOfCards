@@ -2,13 +2,14 @@ package com.codecool;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Table {
     Deck deck;
     List<Player> playerList;
     List<Card> sideCards;
-    int numberOfPlayers = 0;
+    int numberOfPlayers;
 
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
@@ -80,13 +81,58 @@ public class Table {
         boolean hasDealerCards = dealerHand.getIterator().hasNext();
         boolean hasPlayerCards = playerHand.getIterator().hasNext();
         String result;
+        Player currentPlayer = dealer;
+        Player opponentPlayer = player;
+
 
         while (hasDealerCards && hasPlayerCards){
             //todo do while both players have not empty hands, carry on turns and compare cards
 
+            Card currentPlayerTopCard = currentPlayer.getTopCard();
+            Card opponentPlayerTopCard = opponentPlayer.getTopCard();
+            List<Card> cardsInPlay = new ArrayList<>();
+            cardsInPlay.add(currentPlayerTopCard);
+            cardsInPlay.add(opponentPlayerTopCard);
+
+            //todo displayCurrentPlayerTopCard(Player currentPlayer);
+            String choosenStat = currentPlayer.chooseCardStatToCompare(); //todo adjust methods in abstract and concrete classes
+            //todo displayBothPlayersTopCard(Player currentPlayer, Player opponentPlayer);
+            int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer); //todo create method adjust parameter
+            if (resultOfCompare == 0) {
+                //todo addBothPlayersCardsToSideCards();
+            } else {
+                //todo whoTakesCards(currentPlayer, opponentPlayer, resultOfCompare); //create separate method
+                if (resultOfCompare > 0) {
+                    currentPlayer.addCardsToBottomOfHand(cardsInPlay);
+                    if (sideCards.size() != 0) {
+                        currentPlayer.addCardsToBottomOfHand(sideCards);
+                    }
+                } else {
+                    opponentPlayer.addCardsToBottomOfHand(cardsInPlay);
+                    if (sideCards.size() != 0) {
+                        opponentPlayer.addCardsToBottomOfHand(sideCards);
+                    }
+                    //todo switchPlayers(currentPlayer, opponentPlayer);  //create separate method
+                    if (currentPlayer == dealer){
+                        currentPlayer = player;
+                        opponentPlayer = dealer;
+                    } else {
+                        currentPlayer = dealer;
+                        opponentPlayer = player;
+                    }
+                }
+            }
+            //todo clearTopCardsFromTable(); or //printTableWithoutTopCardsOnTable();
         }
         result = !hasPlayerCards ? dealer.getName() : player.getName();
 
         System.out.println("The Winner is :" + result);
+
     }
+
+    private int comparePlayersTopCards(String choosenStat, Player currentPlayer, Player opponentPlayer) {
+        return 0;
+    }
+
+
 }
