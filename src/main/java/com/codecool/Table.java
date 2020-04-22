@@ -8,7 +8,7 @@ public class Table {
     Deck deck;
     List<Player> playerList;
     List<Card> sideCards;
-    int numberOfPlayers = playerList.size();
+    int numberOfPlayers = 0;
 
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
@@ -16,6 +16,7 @@ public class Table {
         this.playerList = new ArrayList<>();
         playerList.add(new Dealer());
         createHumanPlayer();
+        numberOfPlayers = playerList.size();
     }
 
     public Deck getDeck() {
