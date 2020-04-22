@@ -18,7 +18,12 @@ public class HumanPlayer extends Player {
         int input = 0;
         while (isRunning) {
             printStatsToChoose(statChoice);
-            input = Integer.parseInt(scanner.nextLine());
+            try {
+                input = Integer.parseInt(scanner.nextLine());
+            }catch (Exception e){
+                continue;
+            }
+
             if (0 < input && input < 5) {
                 //scanner.close();
                 isRunning = false;
