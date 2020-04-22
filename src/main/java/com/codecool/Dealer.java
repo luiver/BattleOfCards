@@ -16,10 +16,8 @@ public class Dealer extends Player {
         }
     }
 
-    /**
-     * @return int
-     */
-    public String chooseBestCardStatToCompare() {
+    @Override
+    public String chooseCardStatToCompare() {
         Card topCard = getTopCard();
         Map<String, Integer> stats = topCard.getStats();
         String biggestValue = Collections.max(stats.entrySet(), (entry1, entry2) -> entry1.getValue() - entry2.getValue()).getKey();
