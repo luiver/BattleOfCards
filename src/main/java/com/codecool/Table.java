@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Table {
-    Deck deck;
-    List<Player> playerList;
-    List<Card> sideCards;
-    int numberOfPlayers;
+    private Deck deck;
+    private List<Player> playerList;
+    private List<Card> sideCards;
+    private int numberOfPlayers;
 
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
@@ -86,8 +86,6 @@ public class Table {
 
 
         while (hasDealerCards && hasPlayerCards){
-            //todo do while both players have not empty hands, carry on turns and compare cards
-
             Card currentPlayerTopCard = currentPlayer.getTopCard();
             Card opponentPlayerTopCard = opponentPlayer.getTopCard();
             List<Card> cardsInPlay = new ArrayList<>();
@@ -95,11 +93,11 @@ public class Table {
             cardsInPlay.add(opponentPlayerTopCard);
 
             //todo displayCurrentPlayerTopCard(Player currentPlayer);
-            String choosenStat = currentPlayer.chooseCardStatToCompare(); //todo adjust methods in abstract and concrete classes
+            String choosenStat = currentPlayer.chooseCardStatToCompare();
             //todo displayBothPlayersTopCard(Player currentPlayer, Player opponentPlayer);
             int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer); //todo create method adjust parameter
             if (resultOfCompare == 0) {
-                //todo addBothPlayersCardsToSideCards();
+                addCardsToSideCards(cardsInPlay);
             } else {
                 //todo whoTakesCards(currentPlayer, opponentPlayer, resultOfCompare); //create separate method
                 if (resultOfCompare > 0) {
@@ -134,5 +132,10 @@ public class Table {
         return 0;
     }
 
+    private void addCardsToSideCards(List<Card> cardsInPlay) {
+        for (Card card : cardsInPlay) {
+            sideCards.add(card);
+        }
+    }
 
 }

@@ -10,12 +10,6 @@ public class Dealer extends Player {
         name = "Dealer";
     }
 
-    public void addCardsToSideCards(List<Card> sideCards, List<Card> sideCardsToAdd) {
-        for (Card card : sideCardsToAdd) {
-            sideCards.add(card);
-        }
-    }
-
     @Override
     public String chooseCardStatToCompare() {
         Card topCard = getTopCard();
