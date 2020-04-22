@@ -142,10 +142,10 @@ public class Table {
         System.out.println("##############");
         opponentPlayer.getHand().getCardsOnHand().forEach(e -> System.out.println(e.getCardName()));
         String cards = currentPlayer.getTopCard().getCardName() + "############"+ opponentPlayer.getTopCard().getCardName() + "\n" +
-            "attack " + currentPlayer.getTopCard().getValueById("attack") + "###############"+ "attack " + opponentPlayer.getTopCard().getValueById("attack") + "\n" +
-            "defence " + currentPlayer.getTopCard().getValueById("defence") + "###########"+ "defence " + opponentPlayer.getTopCard().getValueById("defence") + "\n" +
-            "intelligence " + currentPlayer.getTopCard().getValueById("intelligence") + "###########"+ "intelligence " + opponentPlayer.getTopCard().getValueById("intelligence") + "\n" +
-            "agility " + currentPlayer.getTopCard().getValueById("agility") + "##############"+ "agility " + opponentPlayer.getTopCard().getValueById("agility") + "\n" ;
+            "attack " + currentPlayer.getTopCard().getValueById("attack") + "############"+ "attack " + opponentPlayer.getTopCard().getValueById("attack") + "\n" +
+            "defence " + currentPlayer.getTopCard().getValueById("defence") + "############"+ "defence " + opponentPlayer.getTopCard().getValueById("defence") + "\n" +
+            "intelligence " + currentPlayer.getTopCard().getValueById("intelligence") + "############"+ "intelligence " + opponentPlayer.getTopCard().getValueById("intelligence") + "\n" +
+            "agility " + currentPlayer.getTopCard().getValueById("agility") + "############"+ "agility " + opponentPlayer.getTopCard().getValueById("agility") + "\n" ;
 
         System.out.println(cards);
     }
