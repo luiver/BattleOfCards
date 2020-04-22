@@ -129,7 +129,10 @@ public class Table {
     }
 
     private int comparePlayersTopCards(String choosenStat, Player currentPlayer, Player opponentPlayer) {
-        return 0;
+        Integer currentPlayerStat= currentPlayer.getTopCard().getValueById(choosenStat);
+        Integer opponentPlayerStat = opponentPlayer.getTopCard().getValueById(choosenStat);
+        int compare = currentPlayerStat.compareTo(opponentPlayerStat);
+        return compare;
     }
 
     private void addCardsToSideCards(List<Card> cardsInPlay) {
