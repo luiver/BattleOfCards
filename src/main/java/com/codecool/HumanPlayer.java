@@ -11,7 +11,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public String chooseCardStatToCompare() { // TODO: 21.04.2020 somehow print stats names to user
+    public String chooseCardStatToCompare() {
         Map<Integer, String> statChoice = makeChoiceMap();
         boolean isRunning = true;
         Scanner scanner = new Scanner(System.in);
