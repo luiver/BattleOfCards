@@ -15,10 +15,6 @@ public class Card {
         this.stats = new HashMap<>();
     }
 
-    public Set<String> getIdSet() {
-        return this.stats.keySet();
-    }
-
     public void setCardStatsById(String id, int value) {
         this.stats.put(id, value);
     }

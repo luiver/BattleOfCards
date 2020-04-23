@@ -17,10 +17,6 @@ public class CardParser {
         parseCards();
     }
 
-    public Document getDoc() {
-        return this.doc;
-    }
-
     public Deck getDeck() {
         return deck;
     }

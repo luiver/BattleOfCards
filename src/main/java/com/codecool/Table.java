@@ -39,14 +39,6 @@ public class Table {
         numberOfPlayers = playerList.size();
     }
 
-    public Deck getDeck() {
-        return deck;
-    }
-
-    public List<Card> getSideCards() {
-        return sideCards;
-    }
-
     public List<Player> getPlayerList() {
         return playerList;
     }
@@ -101,7 +93,6 @@ public class Table {
             cardsInPlay.add(currentPlayer.getTopCard());
             cardsInPlay.add(opponentPlayer.getTopCard());
             printTable(currentPlayer,opponentPlayer, false, true);
-            //printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
             String choosenStat = currentPlayer.chooseCardStatToCompare();
             printTable(currentPlayer,opponentPlayer, true, false);
             int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer);
@@ -167,18 +158,6 @@ public class Table {
         }
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-    }
-
-    private void printTopCards(Player currentPlayer, Player opponentPlayer) {
-        currentPlayer.getHand().getCardsOnHand().forEach(e -> System.out.println(e.getCardName()));
-        System.out.println("##############");
-        opponentPlayer.getHand().getCardsOnHand().forEach(e -> System.out.println(e.getCardName()));
-        String cards = currentPlayer.getTopCard().getCardName() + "############"+ opponentPlayer.getTopCard().getCardName() + "\n" +
-            "attack " + currentPlayer.getTopCard().getValueById("attack") + "###############"+ "attack " + opponentPlayer.getTopCard().getValueById("attack") + "\n" +
-            "defence " + currentPlayer.getTopCard().getValueById("defence") + "###########"+ "defence " + opponentPlayer.getTopCard().getValueById("defence") + "\n" +
-            "intelligence " + currentPlayer.getTopCard().getValueById("intelligence") + "###########"+ "intelligence " + opponentPlayer.getTopCard().getValueById("intelligence") + "\n" +
-            "agility " + currentPlayer.getTopCard().getValueById("agility") + "##############"+ "agility " + opponentPlayer.getTopCard().getValueById("agility") + "\n" ;
-        System.out.println(cards);
     }
 
     private String getTopCardDisplay(Player player){

@@ -23,9 +23,7 @@ public class HumanPlayer extends Player {
             }catch (Exception e){
                 continue;
             }
-
             if (0 < input && input < 5) {
-                //scanner.close();
                 isRunning = false;
             }
         }

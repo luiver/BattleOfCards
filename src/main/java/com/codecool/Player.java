@@ -1,7 +1,6 @@
 package com.codecool;
 
 import java.util.List;
-import java.util.Scanner;
 
 public abstract class Player {
     private Hand hand;
