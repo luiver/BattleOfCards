@@ -2,6 +2,8 @@ package com.codecool;
 
 import com.jakewharton.fliptables.FlipTable;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Ui {
@@ -52,7 +54,7 @@ public class Ui {
         System.out.println(FlipTable.of(header, menu));
     }
 
-    public static String getCardRevers() {
+    public String getCardRevers() {
 
         String cardRevers = "╔══════════════════════════════╗\n" +
                 "║                              ║\n" +
@@ -76,7 +78,7 @@ public class Ui {
         return cardRevers;
     }
 
-    public static String getEmptyRevers() {
+    public String getEmptyRevers() {
         String emptyRevers = "╔══════════════════════════════╗\n" +
                 "║                              ║\n" +
                 "║                              ║\n" +
@@ -99,7 +101,7 @@ public class Ui {
         return emptyRevers;
     }
 
-    public static String getVLetter() {
+    public String getVLetter() {
         String vLetter = "        8b           d8\n" +
                 "        `8b         d8'\n" +
                 "         `8b       d8' \n" +
@@ -111,9 +113,9 @@ public class Ui {
         return vLetter;
     }
 
-    public static String getSLetter() {
-        String sLetter = "          ad88888ba \n" +
-                "         d8\"     \"8b\n" +
+    public String getSLetter() {
+        String sLetter = "           ad88888ba \n" +
+                "          d8\"     \"8b\n" +
                 "           Y8,        \n" +
                 "           `Y8aaaaa,  \n" +
                 "              `\"\"\"\"\"8b,\n" +
@@ -121,5 +123,44 @@ public class Ui {
                 "           Y8a     a8P\n" +
                 "            \"Y88888P\" ";
         return sLetter;
+    }
+
+    public void displayEndGameScreen(String resultOfGame){
+        System.out.println("The Winner is: " + resultOfGame + "\n");
+        File file = resultOfGame.equals("Dealer") ? new File("data/looseScreen.txt") : new File("data/winScreen.txt");
+        try{
+            String contents = new Scanner(file).useDelimiter("\\Z").next();
+            System.out.println(contents);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error reading file");
+        }
+    }
+
+    public String createTopCard(String name, String stat1, String stat2, String stat3, String stat4){
+        String card = String.format("╔══════════════════════════════╗\n" +
+                "║                              ║\n" +
+                "║%-30s║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║%-30s║\n" +
+                "║                              ║\n" +
+                "║%-30s║\n" +
+                "║                              ║\n" +
+                "║%-30s║\n" +
+                "║                              ║\n" +
+                "║%-30s║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "╚══════════════════════════════╝", name,stat1,stat2,stat3,stat4);
+        return card;
+    }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

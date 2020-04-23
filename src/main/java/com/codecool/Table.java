@@ -1,7 +1,6 @@
 package com.codecool;
 
 import com.jakewharton.fliptables.FlipTable;
-import com.codecool.Ui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,15 +11,31 @@ public class Table {
     private List<Player> playerList;
     private List<Card> sideCards;
     private int numberOfPlayers;
+    private Ui ui;
+    private String cardRevers;
+    private String emptyRevers;
+    private String vLetter;
+    private String sLetter;
 
     public Table(CardParser cardParser) {
+        initializeUI();
+        initializeTableComponents(cardParser);
+    }
+
+    private void initializeUI() {
+        this.ui = new Ui();
+        cardRevers = ui.getCardRevers();
+        emptyRevers = ui.getEmptyRevers();
+        vLetter = ui.getVLetter();
+        sLetter = ui.getSLetter();
+    }
+
+    private void initializeTableComponents(CardParser cardParser){
         this.deck = cardParser.getDeck();
         this.sideCards = new ArrayList<>();
         this.playerList = new ArrayList<>();
         playerList.add(new Dealer());
         createHumanPlayer();
-
-
         numberOfPlayers = playerList.size();
     }
 
@@ -43,7 +58,6 @@ public class Table {
     public void playCards() {
         int cardsInDeck = deck.getCards().size();
         int numberOfCardsForPlayers = cardsInDeck % numberOfPlayers == 0 ? cardsInDeck : cardsInDeck - (cardsInDeck % numberOfPlayers);
-
         if (numberOfPlayers % 2 == 0) {
             for (int i = 0; i < numberOfCardsForPlayers; i++) {
                 if (i % 2 == 0) {
@@ -53,8 +67,6 @@ public class Table {
                 }
             }
         }
-        //todo option for more players
-
     }
 
     private void createHumanPlayer() {
@@ -67,13 +79,13 @@ public class Table {
                 pvcMode();
                 break;
             case 3:
-                //dealerVs2Players
+                //dealerVs2Players //todo
                 break;
             case 4:
-                //dealerVs3Players
+                //dealerVs3Players //todo
                 break;
             default:
-                //exit?
+                //exit //todo
         }
     }
 
@@ -110,7 +122,7 @@ public class Table {
             printEndTurn();
         }
         String resultOfGame = !hasPlayerCards ? dealer.getName() : player.getName();
-        displayEndGameScreen(resultOfGame);
+        ui.displayEndGameScreen(resultOfGame);
     }
 
     private boolean doSwitchPlayers(Player currentPlayer, Player opponentPlayer, int resultOfCompare, List<Card> cardsInPlay) {
@@ -166,46 +178,23 @@ public class Table {
             "defence " + currentPlayer.getTopCard().getValueById("defence") + "###########"+ "defence " + opponentPlayer.getTopCard().getValueById("defence") + "\n" +
             "intelligence " + currentPlayer.getTopCard().getValueById("intelligence") + "###########"+ "intelligence " + opponentPlayer.getTopCard().getValueById("intelligence") + "\n" +
             "agility " + currentPlayer.getTopCard().getValueById("agility") + "##############"+ "agility " + opponentPlayer.getTopCard().getValueById("agility") + "\n" ;
-
         System.out.println(cards);
     }
 
     private String getTopCardDisplay(Player player){
         String name = player.getTopCard().getCardName();
-        String stat1 = "Attack: " + String.valueOf(player.getTopCard().getValueById("attack"));
-        String stat2 = "Defence: " + String.valueOf(player.getTopCard().getValueById("defence"));
-        String stat3 = "Intelligence: " + String.valueOf(player.getTopCard().getValueById("intelligence"));
-        String stat4 = "Agility: " + String.valueOf(player.getTopCard().getValueById("agility"));
-
-        String card = String.format("╔══════════════════════════════╗\n" +
-                                    "║                              ║\n" +
-                                    "║%-30s║\n" +
-                                    "║                              ║\n" +
-                                    "║                              ║\n" +
-                                    "║%-30s║\n" +
-                                    "║                              ║\n" +
-                                    "║%-30s║\n" +
-                                    "║                              ║\n" +
-                                    "║%-30s║\n" +
-                                    "║                              ║\n" +
-                                    "║%-30s║\n" +
-                                    "║                              ║\n" +
-                                    "║                              ║\n" +
-                                    "║                              ║\n" +
-                                    "║                              ║\n" +
-                                    "║                              ║\n" +
-                                    "║                              ║\n" +
-                                    "╚══════════════════════════════╝", name,stat1,stat2,stat3,stat4);
-        return card;
-
+        String stat1 = "Attack: " + (player.getTopCard().getValueById("attack"));
+        String stat2 = "Defence: " + (player.getTopCard().getValueById("defence"));
+        String stat3 = "Intelligence: " + (player.getTopCard().getValueById("intelligence"));
+        String stat4 = "Agility: " + (player.getTopCard().getValueById("agility"));
+        return ui.createTopCard(name,stat1,stat2,stat3,stat4);
     }
 
     private void printTable(Player currentPlayer, Player opponentPlayer, boolean isVisibleForBoth, boolean singleDisplay) {
-        clearScreen();
+        ui.clearScreen();
         String cpCardToDisplay;
         String opCardToDisplay;
         Player dealer = playerList.get(0);
-
         if (!isVisibleForBoth && singleDisplay){
             if (currentPlayer == dealer) {
                 cpCardToDisplay = emptyRevers;
@@ -222,7 +211,6 @@ public class Table {
                 cpCardToDisplay = getTopCardDisplay(currentPlayer);
                 opCardToDisplay = getTopCardDisplay(opponentPlayer);
             }
-
         } else {
             cpCardToDisplay = emptyRevers;
             opCardToDisplay = emptyRevers;
@@ -247,11 +235,6 @@ public class Table {
         System.out.println(FlipTable.of(headers, data));
     }
 
-    String cardRevers = Ui.getCardRevers();
-    String emptyRevers = Ui.getEmptyRevers();
-    String vLetter = Ui.getVLetter();
-    String sLetter = Ui.getSLetter();
-
     private int comparePlayersTopCards(String choosenStat, Player currentPlayer, Player opponentPlayer) {
         Integer currentPlayerStat= currentPlayer.getTopCard().getValueById(choosenStat);
         Integer opponentPlayerStat = opponentPlayer.getTopCard().getValueById(choosenStat);
@@ -263,23 +246,5 @@ public class Table {
         for (Card card : cardsInPlay) {
             sideCards.add(card);
         }
-    }
-
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
-    //todo move to UI
-    private void displayEndGameScreen(String resultOfGame){
-        System.out.println("The Winner is: " + resultOfGame + "\n");
-        File file;
-        if (resultOfGame.equals("Dealer")) {
-            file = new File("data/looseScreen.txt");
-        } else {
-            file = new File("data/winScreen.txt");
-        }
-        String contents = new Scanner(file).useDelimiter("\\Z").next();
-        System.out.println(contents);
     }
 }
