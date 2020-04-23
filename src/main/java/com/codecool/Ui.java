@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Ui {
 
     private void storyScreen() {
+        clearScreen();
         String left = " X ";
         String mid = "In this game you will encounter mighty \nand scary enemy called Dealer!\nIf you are brave enough write Your name!";
         String right = " X ";
@@ -55,6 +56,9 @@ public class Ui {
                 "Player with higher statistics value wins a round and takes cards from table.\n" +
                 "Game ends when one of the players runs out of the cards."}};
         System.out.println(FlipTable.of(header, menu));
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     public String getCardRevers() {
