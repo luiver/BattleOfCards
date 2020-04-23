@@ -5,6 +5,7 @@ import com.jakewharton.fliptables.FlipTable;
 import java.util.Scanner;
 
 public class Ui {
+
     private void storyScreen() {
         String left = " X ";
         String mid = "In this game you will encounter mighty \nand scary enemy called Dealer!\nIf you are brave enough write Your name!";
@@ -49,5 +50,76 @@ public class Ui {
                 "Player with higher statistics value wins a round and takes cards from table.\n" +
                 "Game ends when one of the players runs out of the cards."}};
         System.out.println(FlipTable.of(header, menu));
+    }
+
+    public static String getCardRevers() {
+
+        String cardRevers = "╔══════════════════════════════╗\n" +
+                "║                              ║\n" +
+                "║    |\\                     /) ║\n" +
+                "║  /\\_\\\\__               (_//  ║\n" +
+                "║ |   `>\\-`     _._       //`) ║\n" +
+                "║  \\ /` \\\\  _.-`:::`-._  //    ║\n" +
+                "║   `    \\|`    :::    `|/     ║\n" +
+                "║         |     :::     |      ║\n" +
+                "║         |.....:::.....|      ║\n" +
+                "║         |:::::::::::::|      ║\n" +
+                "║         |     :::     |      ║\n" +
+                "║         \\     :::     /      ║\n" +
+                "║          \\    :::    /       ║\n" +
+                "║           `-. ::: .-'        ║\n" +
+                "║            //`:::`\\\\         ║\n" +
+                "║           //   '   \\\\        ║\n" +
+                "║          |/         \\\\       ║\n" +
+                "║                              ║\n" +
+                "╚══════════════════════════════╝";
+        return cardRevers;
+    }
+
+    public static String getEmptyRevers() {
+        String emptyRevers = "╔══════════════════════════════╗\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "║                              ║\n" +
+                "╚══════════════════════════════╝";
+        return emptyRevers;
+    }
+
+    public static String getVLetter() {
+        String vLetter = "        8b           d8\n" +
+                "        `8b         d8'\n" +
+                "         `8b       d8' \n" +
+                "          `8b     d8'  \n" +
+                "           `8b   d8'   \n" +
+                "            `8b d8'    \n" +
+                "             `888'     \n" +
+                "              `8'      ";
+        return vLetter;
+    }
+
+    public static String getSLetter() {
+        String sLetter = "          ad88888ba \n" +
+                "         d8\"     \"8b\n" +
+                "           Y8,        \n" +
+                "           `Y8aaaaa,  \n" +
+                "              `\"\"\"\"\"8b,\n" +
+                "                   `8b\n" +
+                "           Y8a     a8P\n" +
+                "            \"Y88888P\" ";
+        return sLetter;
     }
 }

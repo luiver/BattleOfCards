@@ -1,7 +1,7 @@
 package com.codecool;
 
 import com.jakewharton.fliptables.FlipTable;
-
+import com.codecool.Ui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +19,7 @@ public class Table {
         this.playerList = new ArrayList<>();
         playerList.add(new Dealer());
         createHumanPlayer();
+
 
         numberOfPlayers = playerList.size();
     }
@@ -241,70 +242,15 @@ public class Table {
         String[][] rightData = { {cpCardToDisplay, isReverseOnPlayerHand}};
         String right = FlipTable.of(righHeaders, rightData);
         String[] headers = { playerList.get(0).getName(), "side cards", playerList.get(1).getName() };
-        String[][] data = //{
-                { {left, mid, right} };
-//                {"4", "5", "6"},
-//        };
+        String[][] data = { {left, mid, right} };
+
         System.out.println(FlipTable.of(headers, data));
     }
 
-    String cardRevers = "╔══════════════════════════════╗\n" +
-            "║                              ║\n" +
-            "║    |\\                     /) ║\n" +
-            "║  /\\_\\\\__               (_//  ║\n" +
-            "║ |   `>\\-`     _._       //`) ║\n" +
-            "║  \\ /` \\\\  _.-`:::`-._  //    ║\n" +
-            "║   `    \\|`    :::    `|/     ║\n" +
-            "║         |     :::     |      ║\n" +
-            "║         |.....:::.....|      ║\n" +
-            "║         |:::::::::::::|      ║\n" +
-            "║         |     :::     |      ║\n" +
-            "║         \\     :::     /      ║\n" +
-            "║          \\    :::    /       ║\n" +
-            "║           `-. ::: .-'        ║\n" +
-            "║            //`:::`\\\\         ║\n" +
-            "║           //   '   \\\\        ║\n" +
-            "║          |/         \\\\       ║\n" +
-            "║                              ║\n" +
-            "╚══════════════════════════════╝";
-
-    String emptyRevers = "╔══════════════════════════════╗\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "║                              ║\n" +
-            "╚══════════════════════════════╝";
-
-    String vLetter = "8b           d8\n" +
-            "`8b         d8'\n" +
-            " `8b       d8' \n" +
-            "  `8b     d8'  \n" +
-            "   `8b   d8'   \n" +
-            "    `8b d8'    \n" +
-            "     `888'     \n" +
-            "      `8'      ";
-
-    String sLetter = " ad88888ba \n" +
-            "d8\"     \"8b\n" +
-            "Y8,        \n" +
-            "`Y8aaaaa,  \n" +
-            "  `\"\"\"\"\"8b,\n" +
-            "        `8b\n" +
-            "Y8a     a8P\n" +
-            " \"Y88888P\" ";
+    String cardRevers = Ui.getCardRevers();
+    String emptyRevers = Ui.getEmptyRevers();
+    String vLetter = Ui.getVLetter();
+    String sLetter = Ui.getSLetter();
 
     private int comparePlayersTopCards(String choosenStat, Player currentPlayer, Player opponentPlayer) {
         Integer currentPlayerStat= currentPlayer.getTopCard().getValueById(choosenStat);
