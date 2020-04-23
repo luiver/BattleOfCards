@@ -16,6 +16,15 @@ public class Dealer extends Player {
         Map<String, Integer> stats = topCard.getStats();
         String biggestValue = Collections.max(stats.entrySet(), (entry1, entry2) -> entry1.getValue() - entry2.getValue()).getKey();
 //        int biggest = stats.entrySet().stream().max((entry1, entry2) -> entry1.getValue() - entry2.getValue()).get().getValue();
+        System.out.println("Dealer is choosing a stat to play");
+        try
+        {
+            Thread.sleep(3000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
         return biggestValue;
     }
 }
