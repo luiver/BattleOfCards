@@ -1,5 +1,6 @@
 package com.codecool;
 
+import com.github.tomaslanger.chalk.Chalk;
 import com.jakewharton.fliptables.FlipTable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -161,11 +162,11 @@ public class Table {
     }
 
     private String getTopCardDisplay(Player player){
-        String name = player.getTopCard().getCardName();
-        String stat1 = "Attack: " + (player.getTopCard().getValueById("attack"));
-        String stat2 = "Defence: " + (player.getTopCard().getValueById("defence"));
-        String stat3 = "Intelligence: " + (player.getTopCard().getValueById("intelligence"));
-        String stat4 = "Agility: " + (player.getTopCard().getValueById("agility"));
+        String name = "" +Chalk.on(player.getTopCard().getCardName()).green().bold();
+        String stat1 = "" +Chalk.on("Attack: " + (player.getTopCard().getValueById("attack"))).red();
+        String stat2 = "" +Chalk.on("Defence: " + (player.getTopCard().getValueById("defence"))).cyan();
+        String stat3 = "" +Chalk.on("Intelligence: " + (player.getTopCard().getValueById("intelligence"))).blue();
+        String stat4 = "" +Chalk.on("Agility: " + (player.getTopCard().getValueById("agility"))).magenta();
         return ui.createTopCard(name,stat1,stat2,stat3,stat4);
     }
 

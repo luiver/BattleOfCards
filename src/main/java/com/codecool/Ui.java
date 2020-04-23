@@ -147,16 +147,16 @@ public class Ui {
     public String createTopCard(String name, String stat1, String stat2, String stat3, String stat4){
         String card = String.format("╔══════════════════════════════╗\n" +
                 "║                              ║\n" +
-                "║%-30s║\n" +
+                "║%-49s║\n" +
                 "║                              ║\n" +
                 "║                              ║\n" +
-                "║%-30s║\n" +
+                "║%-40s║\n" +
                 "║                              ║\n" +
-                "║%-30s║\n" +
+                "║%-40s║\n" +
                 "║                              ║\n" +
-                "║%-30s║\n" +
+                "║%-40s║\n" +
                 "║                              ║\n" +
-                "║%-30s║\n" +
+                "║%-40s║\n" +
                 "║                              ║\n" +
                 "║                              ║\n" +
                 "║                              ║\n" +
