@@ -156,7 +156,7 @@ public class Table {
     }
 
     private void printTable() {
-        String[] leftHeaders = {"dupa1", "dupa2"};
+        String[] leftHeaders = {"dupa1"};
         String[][] leftData = {};
         String left = FlipTable.of(leftHeaders, leftData);
         String[] midHeaders = {vLetter, sLetter};
