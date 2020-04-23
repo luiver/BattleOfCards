@@ -17,6 +17,7 @@ public class Hand {
         this.cardsOnHand.add(card);
     }
 
+
     private class CardIterator implements Iterator<Card> {
         int index;
 

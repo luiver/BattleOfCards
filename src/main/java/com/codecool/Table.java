@@ -63,7 +63,7 @@ public class Table {
     public void playGame(){
         switch (numberOfPlayers) {
             case 2:
-                dealerVsPlayer();
+                pvcMode();
                 break;
             case 3:
                 //dealerVs2Players
@@ -76,12 +76,11 @@ public class Table {
         }
     }
 
-    private void dealerVsPlayer(){
+    private void pvcMode(){
         Player dealer = getPlayerList().get(0);
         Player player = getPlayerList().get(1);
         boolean hasDealerCards = dealer.getHand().getIterator().hasNext();
         boolean hasPlayerCards = player.getHand().getIterator().hasNext();
-        String resultOfGame;
         Player currentPlayer = player;
         Player opponentPlayer = dealer;
         while (hasDealerCards && hasPlayerCards){
@@ -109,8 +108,8 @@ public class Table {
             printTable(currentPlayer,opponentPlayer, false, false);
             printEndTurn();
         }
-        resultOfGame = !hasPlayerCards ? dealer.getName() : player.getName();
-        System.out.println("The Winner is: " + resultOfGame);
+        String resultOfGame = !hasPlayerCards ? dealer.getName() : player.getName();
+        displayEndGameScreen(resultOfGame);
     }
 
     private boolean doSwitchPlayers(Player currentPlayer, Player opponentPlayer, int resultOfCompare, List<Card> cardsInPlay) {
@@ -323,5 +322,18 @@ public class Table {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    //todo move to UI
+    private void displayEndGameScreen(String resultOfGame){
+        System.out.println("The Winner is: " + resultOfGame + "\n");
+        File file;
+        if (resultOfGame.equals("Dealer")) {
+            file = new File("data/looseScreen.txt");
+        } else {
+            file = new File("data/winScreen.txt");
+        }
+        String contents = new Scanner(file).useDelimiter("\\Z").next();
+        System.out.println(contents);
     }
 }
