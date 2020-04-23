@@ -8,7 +8,8 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Test nowego repo");
-
+        Ui ui = new Ui();
+        ui.Menu();
         Table table = new Table(new CardParser());
 
         table.shuffleDeck();
