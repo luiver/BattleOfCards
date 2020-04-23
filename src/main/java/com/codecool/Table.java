@@ -172,12 +172,33 @@ public class Table {
     }
 
     private String getTopCardDisplay(Player player){
-        StringBuilder b = new StringBuilder();
-        b.append(player.getTopCard().getCardName() + "\n\n");
-        player.getTopCard().getStats().forEach((k,v) -> b.append(k + ": "+ v + "\n\n" ));
-        return b.toString();
-        //String name = player.getTopCard().getCardName() + "\n\n";
-        //String stat1 = player.getTopCard().getStats().
+        String name = player.getTopCard().getCardName();
+        String stat1 = "Attack: " + String.valueOf(player.getTopCard().getValueById("attack"));
+        String stat2 = "Defence: " + String.valueOf(player.getTopCard().getValueById("defence"));
+        String stat3 = "Intelligence: " + String.valueOf(player.getTopCard().getValueById("intelligence"));
+        String stat4 = "Agility: " + String.valueOf(player.getTopCard().getValueById("agility"));
+
+        String card = String.format("╔══════════════════════════════╗\n" +
+                                    "║                              ║\n" +
+                                    "║%-30s║\n" +
+                                    "║                              ║\n" +
+                                    "║                              ║\n" +
+                                    "║%-30s║\n" +
+                                    "║                              ║\n" +
+                                    "║%-30s║\n" +
+                                    "║                              ║\n" +
+                                    "║%-30s║\n" +
+                                    "║                              ║\n" +
+                                    "║%-30s║\n" +
+                                    "║                              ║\n" +
+                                    "║                              ║\n" +
+                                    "║                              ║\n" +
+                                    "║                              ║\n" +
+                                    "║                              ║\n" +
+                                    "║                              ║\n" +
+                                    "╚══════════════════════════════╝", name,stat1,stat2,stat3,stat4);
+        return card;
+
     }
 
     private void printTable(Player currentPlayer, Player opponentPlayer, boolean isVisibleForBoth, boolean singleDisplay) {
@@ -208,8 +229,8 @@ public class Table {
             opCardToDisplay = emptyRevers;
         }
 
-        String isReverseOnPlayerHand = currentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
-        String isReverseOnOponentHand = opponentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
+        String isReverseOnPlayerHand = playerList.get(1).getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
+        String isReverseOnOponentHand = playerList.get(0).getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
         String isReverseOnSideCards = sideCards.size() > 0 ? cardRevers : emptyRevers ;
 
         String[] leftHeaders = {"Hand", "Top Card"};

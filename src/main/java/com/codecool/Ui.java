@@ -38,7 +38,7 @@ public class Ui {
 
     private void printMenu() {
         String[] header = {"Menu"};
-        String[][] menu = {{"1. Start game"}, {"2.Help"}, {"3.Exit"}};
+        String[][] menu = {{"1. Start game"}, {"2. Help"}, {"3. Exit"}};
         System.out.println(FlipTable.of(header, menu));
     }
 
