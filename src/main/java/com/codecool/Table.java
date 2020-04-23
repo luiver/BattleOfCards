@@ -95,10 +95,11 @@ public class Table {
             cardsInPlay.add(currentPlayerTopCard);
             cardsInPlay.add(opponentPlayerTopCard);
 
-            printTable();
+            printTable(currentPlayer,opponentPlayer, false, true);
             printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
             //todo displayCurrentPlayerTopCard(Player currentPlayer);
             String choosenStat = currentPlayer.chooseCardStatToCompare();
+            printTable(currentPlayer,opponentPlayer, true, false);
             //todo displayBothPlayersTopCard(Player currentPlayer, Player opponentPlayer);
             int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer); //todo create method adjust parameter
             System.out.println(resultOfCompare + " - is result of compare");
@@ -137,6 +138,7 @@ public class Table {
             hasDealerCards = dealerHand.getIterator().hasNext();
             hasPlayerCards = playerHand.getIterator().hasNext();
             //todo clearTopCardsFromTable(); or //printTableWithoutTopCardsOnTable();
+            printTable(currentPlayer,opponentPlayer, false, false);
         }
         result = !hasPlayerCards ? dealer.getName() : player.getName();
 
@@ -158,22 +160,52 @@ public class Table {
     }
 
     private String getTopCardDisplay(Player player){
-        //String result =
-      return "";
+        StringBuilder b = new StringBuilder();
+        b.append(player.getTopCard().getCardName() + "\n\n");
+        player.getTopCard().getStats().forEach((k,v) -> b.append(k + ": "+ v + "\n\n" ));
+        return b.toString();
+        //String name = player.getTopCard().getCardName() + "\n\n";
+        //String stat1 = player.getTopCard().getStats().
     }
 
 
 
 
-    private void printTable() {
+    private void printTable(Player currentPlayer, Player opponentPlayer, boolean isVisibleForBoth, boolean singleDisplay) {
+        String cpCardToDisplay;
+        String opCardToDisplay;
+        Player dealer = playerList.get(0);
+
+        if (!isVisibleForBoth && singleDisplay){
+            if (currentPlayer == dealer) {
+                cpCardToDisplay = emptyRevers;
+                opCardToDisplay = getTopCardDisplay(opponentPlayer);
+            } else {
+                cpCardToDisplay = getTopCardDisplay(currentPlayer);
+                opCardToDisplay = emptyRevers;
+            }
+        } else if (isVisibleForBoth && !singleDisplay) {
+            cpCardToDisplay = getTopCardDisplay(currentPlayer);
+            opCardToDisplay = getTopCardDisplay(opponentPlayer);
+        } else{
+            cpCardToDisplay = emptyRevers;
+            opCardToDisplay = emptyRevers;
+        }
+
+        String isReverseOnPlayerHand = currentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
+        String isReverseOnOponentHand = opponentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;;
+
+        String isReverseOnSideCards = sideCards.size() > 0 ? cardRevers : emptyRevers ;
+
+
         String[] leftHeaders = {"Hand", "Top Card"};
-        String[][] leftData = {{cardRevers, playerList.get(0).getTopCard().getCardName()}};
+        String[][] leftData = {{isReverseOnOponentHand, opCardToDisplay}};
         String left = FlipTable.of(leftHeaders, leftData);
         String[] midHeaders = {vLetter, sLetter};
-        String[][] midData = { {emptyRevers, emptyRevers} };
+        String[][] midData = { {isReverseOnSideCards, isReverseOnSideCards} };
         String mid = FlipTable.of(midHeaders, midData);
         String[] righHeaders = {"Top Card", "Hand"};
-        String[][] rightData = { {playerList.get(1).getTopCard().getCardName(), cardRevers}};
+        String[][] rightData = { {cpCardToDisplay, isReverseOnPlayerHand}};
         String right = FlipTable.of(righHeaders, rightData);
         String[] headers = { playerList.get(0).getName(), "side cards", playerList.get(1).getName() };
         String[][] data = //{
@@ -207,12 +239,18 @@ public class Table {
             "║                              ║\n" +
             "║                              ║\n" +
             "║                              ║\n" +
-            "║                              ║\n" +"║                              ║\n" +
-            "║                              ║\n" +"║                              ║\n" +
-            "║                              ║\n" +"║                              ║\n" +
-            "║                              ║\n" +"║                              ║\n" +
-            "║                              ║\n" +"║                              ║\n" +
-            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
             "║                              ║\n" +
             "║                              ║\n" +
             "╚══════════════════════════════╝";
