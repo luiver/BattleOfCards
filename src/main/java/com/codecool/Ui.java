@@ -19,6 +19,7 @@ public class Ui {
     }
 
     public void Menu() {
+        clearScreen();
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         while (isRunning) {
@@ -39,12 +40,14 @@ public class Ui {
     }
 
     private void printMenu() {
+        clearScreen();
         String[] header = {"Menu"};
         String[][] menu = {{"1. Start game"}, {"2. Help"}, {"3. Exit"}};
         System.out.println(FlipTable.of(header, menu));
     }
 
     private void helpScreen() {
+        clearScreen();
         String[] header = {"Help"};
         String[][] menu = {{"In this game You are fighting with opponent - Dealer, using Your cards.\n" +
                 "Each card has 4 statistics: Attack, Defense, Intelligence and Agility.\n" +
@@ -126,6 +129,7 @@ public class Ui {
     }
 
     public void displayEndGameScreen(String resultOfGame){
+        clearScreen();
         System.out.println("The Winner is: " + resultOfGame + "\n");
         File file = resultOfGame.equals("Dealer") ? new File("data/looseScreen.txt") : new File("data/winScreen.txt");
         try{
