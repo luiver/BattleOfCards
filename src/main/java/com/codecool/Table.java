@@ -5,6 +5,7 @@ import com.jakewharton.fliptables.FlipTable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Table {
     private Deck deck;
@@ -96,13 +97,14 @@ public class Table {
             cardsInPlay.add(opponentPlayerTopCard);
 
             printTable(currentPlayer,opponentPlayer, false, true);
+
             printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
-            //todo displayCurrentPlayerTopCard(Player currentPlayer);
+
             String choosenStat = currentPlayer.chooseCardStatToCompare();
             printTable(currentPlayer,opponentPlayer, true, false);
-            //todo displayBothPlayersTopCard(Player currentPlayer, Player opponentPlayer);
-            int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer); //todo create method adjust parameter
-            System.out.println(resultOfCompare + " - is result of compare");
+
+            int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer);
+            printResultOfCompare(resultOfCompare, currentPlayer, opponentPlayer);
             if (resultOfCompare == 0) {
                 addCardsToSideCards(cardsInPlay);
                 currentPlayer.removeTopCard();
@@ -137,13 +139,31 @@ public class Table {
             }
             hasDealerCards = dealerHand.getIterator().hasNext();
             hasPlayerCards = playerHand.getIterator().hasNext();
-            //todo clearTopCardsFromTable(); or //printTableWithoutTopCardsOnTable();
             printTable(currentPlayer,opponentPlayer, false, false);
+            printEndTurn();
         }
         result = !hasPlayerCards ? dealer.getName() : player.getName();
-
         System.out.println("The Winner is: " + result);
 
+    }
+
+    private void printEndTurn(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Press any key to end turn");
+        scanner.nextLine();
+    }
+
+    private void printResultOfCompare(int resultOfCompare, Player cp, Player op){
+        if(resultOfCompare == 0){
+            System.out.println("Tie! Cards will go to SideCards"); //todo adds colors green to win red to loose white for tie
+        } else if (resultOfCompare == 1){
+            System.out.println(cp.name+" win that round, and gather all cards");
+        } else {
+            System.out.println(op.name+" wins that round, and gather all cards");
+        }
+        Scanner scanner = new Scanner(System.in);
+
+        scanner.nextLine();
     }
 
     private void printTopCards(Player currentPlayer, Player opponentPlayer) {
@@ -168,9 +188,6 @@ public class Table {
         //String stat1 = player.getTopCard().getStats().
     }
 
-
-
-
     private void printTable(Player currentPlayer, Player opponentPlayer, boolean isVisibleForBoth, boolean singleDisplay) {
         String cpCardToDisplay;
         String opCardToDisplay;
@@ -179,24 +196,28 @@ public class Table {
         if (!isVisibleForBoth && singleDisplay){
             if (currentPlayer == dealer) {
                 cpCardToDisplay = emptyRevers;
-                opCardToDisplay = getTopCardDisplay(opponentPlayer);
+                opCardToDisplay = getTopCardDisplay(currentPlayer);
             } else {
                 cpCardToDisplay = getTopCardDisplay(currentPlayer);
                 opCardToDisplay = emptyRevers;
             }
         } else if (isVisibleForBoth && !singleDisplay) {
-            cpCardToDisplay = getTopCardDisplay(currentPlayer);
-            opCardToDisplay = getTopCardDisplay(opponentPlayer);
-        } else{
+            if (currentPlayer == dealer) {
+                cpCardToDisplay = getTopCardDisplay(opponentPlayer);
+                opCardToDisplay = getTopCardDisplay(currentPlayer);
+            } else {
+                cpCardToDisplay = getTopCardDisplay(currentPlayer);
+                opCardToDisplay = getTopCardDisplay(opponentPlayer);
+            }
+
+        } else {
             cpCardToDisplay = emptyRevers;
             opCardToDisplay = emptyRevers;
         }
 
         String isReverseOnPlayerHand = currentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
-        String isReverseOnOponentHand = opponentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;;
-
+        String isReverseOnOponentHand = opponentPlayer.getHand().getCardsOnHand().size()>1 ? cardRevers : emptyRevers;
         String isReverseOnSideCards = sideCards.size() > 0 ? cardRevers : emptyRevers ;
-
 
         String[] leftHeaders = {"Hand", "Top Card"};
         String[][] leftData = {{isReverseOnOponentHand, opCardToDisplay}};
