@@ -26,4 +26,10 @@ public abstract class Player {
     public String getName() {
         return this.name;
     }
+
+    public abstract String chooseCardStatToCompare();
+
+    public void removeTopCard(){
+        hand.getCardsOnHand().remove(0);
+    }
 }

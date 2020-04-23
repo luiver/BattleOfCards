@@ -10,5 +10,10 @@ public class Main {
         System.out.println("Test nowego repo");
 
         Table table = new Table(new CardParser());
+
+        table.shuffleDeck();
+        table.playCards();
+        table.playGame();
+
     }
 }

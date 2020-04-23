@@ -9,7 +9,7 @@
         <module name="BattleOfCards" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="11">
       <module name="BattleOfCards" target="" />
     </bytecodeTargetLevel>
   </component>

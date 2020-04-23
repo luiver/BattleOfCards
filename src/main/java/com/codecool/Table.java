@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Table<headers> {
-    Deck deck;
-    List<Player> playerList;
-    List<Card> sideCards;
-    int numberOfPlayers = 0;
+public class Table {
+    private Deck deck;
+    private List<Player> playerList;
+    private List<Card> sideCards;
+    private int numberOfPlayers;
 
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
@@ -55,7 +55,7 @@ public class Table<headers> {
 
     }
 
-    public void createHumanPlayer() {
+    private void createHumanPlayer() {
         playerList.add(new HumanPlayer());
     }
 
@@ -83,14 +83,76 @@ public class Table<headers> {
         boolean hasDealerCards = dealerHand.getIterator().hasNext();
         boolean hasPlayerCards = playerHand.getIterator().hasNext();
         String result;
+//        Player currentPlayer = dealer;
+//        Player opponentPlayer = player;
+        Player currentPlayer = player;
+        Player opponentPlayer = dealer;
 
         while (hasDealerCards && hasPlayerCards){
-            //todo do while both players have not empty hands, carry on turns and compare cards
-
+            Card currentPlayerTopCard = currentPlayer.getTopCard();
+            Card opponentPlayerTopCard = opponentPlayer.getTopCard();
+            List<Card> cardsInPlay = new ArrayList<>();
+            cardsInPlay.add(currentPlayerTopCard);
+            cardsInPlay.add(opponentPlayerTopCard);
+            printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
+            //todo displayCurrentPlayerTopCard(Player currentPlayer);
+            String choosenStat = currentPlayer.chooseCardStatToCompare();
+            //todo displayBothPlayersTopCard(Player currentPlayer, Player opponentPlayer);
+            int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer); //todo create method adjust parameter
+            System.out.println(resultOfCompare + " - is result of compare");
+            if (resultOfCompare == 0) {
+                addCardsToSideCards(cardsInPlay);
+                currentPlayer.removeTopCard();
+                opponentPlayer.removeTopCard();
+            } else {
+                //todo whoTakesCards(currentPlayer, opponentPlayer, resultOfCompare); //create separate method
+                if (resultOfCompare > 0) {
+                    currentPlayer.addCardsToBottomOfHand(cardsInPlay);
+                    currentPlayer.removeTopCard();
+                    opponentPlayer.removeTopCard();
+                    if (sideCards.size() != 0) {
+                        currentPlayer.addCardsToBottomOfHand(sideCards);
+                        sideCards.clear();
+                    }
+                } else {
+                    opponentPlayer.addCardsToBottomOfHand(cardsInPlay);
+                    currentPlayer.removeTopCard();
+                    opponentPlayer.removeTopCard();
+                    if (sideCards.size() != 0) {
+                        opponentPlayer.addCardsToBottomOfHand(sideCards);
+                        sideCards.clear();
+                    }
+                    //todo switchPlayers(currentPlayer, opponentPlayer);  //create separate method
+                    if (currentPlayer == dealer){
+                        currentPlayer = player;
+                        opponentPlayer = dealer;
+                    } else {
+                        currentPlayer = dealer;
+                        opponentPlayer = player;
+                    }
+                }
+            }
+            hasDealerCards = dealerHand.getIterator().hasNext();
+            hasPlayerCards = playerHand.getIterator().hasNext();
+            //todo clearTopCardsFromTable(); or //printTableWithoutTopCardsOnTable();
         }
         result = !hasPlayerCards ? dealer.getName() : player.getName();
 
-        System.out.println("The Winner is :" + result);
+        System.out.println("The Winner is: " + result);
+
+    }
+
+    private void printTopCards(Player currentPlayer, Player opponentPlayer) {
+        currentPlayer.getHand().getCardsOnHand().forEach(e -> System.out.println(e.getCardName()));
+        System.out.println("##############");
+        opponentPlayer.getHand().getCardsOnHand().forEach(e -> System.out.println(e.getCardName()));
+        String cards = currentPlayer.getTopCard().getCardName() + "############"+ opponentPlayer.getTopCard().getCardName() + "\n" +
+            "attack " + currentPlayer.getTopCard().getValueById("attack") + "###############"+ "attack " + opponentPlayer.getTopCard().getValueById("attack") + "\n" +
+            "defence " + currentPlayer.getTopCard().getValueById("defence") + "###########"+ "defence " + opponentPlayer.getTopCard().getValueById("defence") + "\n" +
+            "intelligence " + currentPlayer.getTopCard().getValueById("intelligence") + "###########"+ "intelligence " + opponentPlayer.getTopCard().getValueById("intelligence") + "\n" +
+            "agility " + currentPlayer.getTopCard().getValueById("agility") + "##############"+ "agility " + opponentPlayer.getTopCard().getValueById("agility") + "\n" ;
+
+        System.out.println(cards);
     }
 
     private void printTable() {
@@ -148,4 +210,16 @@ public class Table<headers> {
             "        `8b\n" +
             "Y8a     a8P\n" +
             " \"Y88888P\" ";
+    private int comparePlayersTopCards(String choosenStat, Player currentPlayer, Player opponentPlayer) {
+        Integer currentPlayerStat= currentPlayer.getTopCard().getValueById(choosenStat);
+        Integer opponentPlayerStat = opponentPlayer.getTopCard().getValueById(choosenStat);
+        int compare = currentPlayerStat.compareTo(opponentPlayerStat);
+        return compare;
+    }
+
+    private void addCardsToSideCards(List<Card> cardsInPlay) {
+        for (Card card : cardsInPlay) {
+            sideCards.add(card);
+        }
+    }
 }
