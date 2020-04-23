@@ -1,6 +1,10 @@
 package com.codecool;
 
-import java.util.*;
+import com.jakewharton.fliptables.FlipTable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Table {
     private Deck deck;
@@ -14,6 +18,7 @@ public class Table {
         this.playerList = new ArrayList<>();
         playerList.add(new Dealer());
         createHumanPlayer();
+
         numberOfPlayers = playerList.size();
     }
 
@@ -89,6 +94,8 @@ public class Table {
             List<Card> cardsInPlay = new ArrayList<>();
             cardsInPlay.add(currentPlayerTopCard);
             cardsInPlay.add(opponentPlayerTopCard);
+
+            printTable();
             printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
             //todo displayCurrentPlayerTopCard(Player currentPlayer);
             String choosenStat = currentPlayer.chooseCardStatToCompare();
@@ -150,6 +157,84 @@ public class Table {
         System.out.println(cards);
     }
 
+    private String getTopCardDisplay(Player player){
+        //String result =
+      return "";
+    }
+
+
+
+
+    private void printTable() {
+        String[] leftHeaders = {"Hand", "Top Card"};
+        String[][] leftData = {{cardRevers, playerList.get(0).getTopCard().getCardName()}};
+        String left = FlipTable.of(leftHeaders, leftData);
+        String[] midHeaders = {vLetter, sLetter};
+        String[][] midData = { {emptyRevers, emptyRevers} };
+        String mid = FlipTable.of(midHeaders, midData);
+        String[] righHeaders = {"Top Card", "Hand"};
+        String[][] rightData = { {playerList.get(1).getTopCard().getCardName(), cardRevers}};
+        String right = FlipTable.of(righHeaders, rightData);
+        String[] headers = { playerList.get(0).getName(), "side cards", playerList.get(1).getName() };
+        String[][] data = //{
+                { {left, mid, right} };
+//                {"4", "5", "6"},
+//        };
+        System.out.println(FlipTable.of(headers, data));
+    }
+
+    String cardRevers = "╔══════════════════════════════╗\n" +
+            "║                              ║\n" +
+            "║    |\\                     /) ║\n" +
+            "║  /\\_\\\\__               (_//  ║\n" +
+            "║ |   `>\\-`     _._       //`) ║\n" +
+            "║  \\ /` \\\\  _.-`:::`-._  //    ║\n" +
+            "║   `    \\|`    :::    `|/     ║\n" +
+            "║         |     :::     |      ║\n" +
+            "║         |.....:::.....|      ║\n" +
+            "║         |:::::::::::::|      ║\n" +
+            "║         |     :::     |      ║\n" +
+            "║         \\     :::     /      ║\n" +
+            "║          \\    :::    /       ║\n" +
+            "║           `-. ::: .-'        ║\n" +
+            "║            //`:::`\\\\         ║\n" +
+            "║           //   '   \\\\        ║\n" +
+            "║          |/         \\\\       ║\n" +
+            "║                              ║\n" +
+            "╚══════════════════════════════╝";
+
+    String emptyRevers = "╔══════════════════════════════╗\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +"║                              ║\n" +
+            "║                              ║\n" +
+            "║                              ║\n" +
+            "╚══════════════════════════════╝";
+
+    String vLetter = "8b           d8\n" +
+            "`8b         d8'\n" +
+            " `8b       d8' \n" +
+            "  `8b     d8'  \n" +
+            "   `8b   d8'   \n" +
+            "    `8b d8'    \n" +
+            "     `888'     \n" +
+            "      `8'      ";
+
+    String sLetter = " ad88888ba \n" +
+            "d8\"     \"8b\n" +
+            "Y8,        \n" +
+            "`Y8aaaaa,  \n" +
+            "  `\"\"\"\"\"8b,\n" +
+            "        `8b\n" +
+            "Y8a     a8P\n" +
+            " \"Y88888P\" ";
+
     private int comparePlayersTopCards(String choosenStat, Player currentPlayer, Player opponentPlayer) {
         Integer currentPlayerStat= currentPlayer.getTopCard().getValueById(choosenStat);
         Integer opponentPlayerStat = opponentPlayer.getTopCard().getValueById(choosenStat);
@@ -162,5 +247,4 @@ public class Table {
             sideCards.add(card);
         }
     }
-
 }
