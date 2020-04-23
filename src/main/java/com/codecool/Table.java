@@ -1,14 +1,16 @@
 package com.codecool;
 
+import com.jakewharton.fliptables.FlipTable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Table {
+public class Table<headers> {
     Deck deck;
     List<Player> playerList;
     List<Card> sideCards;
-    int numberOfPlayers = playerList.size();
+    int numberOfPlayers = 0;
 
     public Table(CardParser cardParser) {
         this.deck = cardParser.getDeck();
@@ -16,6 +18,8 @@ public class Table {
         this.playerList = new ArrayList<>();
         playerList.add(new Dealer());
         createHumanPlayer();
+        printTable();
+        numberOfPlayers = playerList.size();
     }
 
     public Deck getDeck() {
@@ -88,4 +92,60 @@ public class Table {
 
         System.out.println("The Winner is :" + result);
     }
+
+    private void printTable() {
+        String[] leftHeaders = {"dupa1", "dupa2"};
+        String[][] leftData = {};
+        String left = FlipTable.of(leftHeaders, leftData);
+        String[] midHeaders = {vLetter, sLetter};
+        String[][] midData = { {"A", "B"} };
+        String mid = FlipTable.of(midHeaders, midData);
+        String[] righHeaders = {"DUPA1", "DUPA2"};
+        String[][] rightData = { {"DUPA3", "DUPA4"}};
+        String right = FlipTable.of(righHeaders, rightData);
+        String[] headers = { "dealer", "side cards", "player" };
+        String[][] data = //{
+                { {left, mid, right} };
+//                {"4", "5", "6"},
+//        };
+        System.out.println(FlipTable.of(headers, data));
+    }
+
+    String cardRevers = "╔══════════════════════════════╗\n" +
+            "║                              ║\n" +
+            "║    |\\                     /) ║\n" +
+            "║  /\\_\\\\__               (_//  ║\n" +
+            "║ |   `>\\-`     _._       //`) ║\n" +
+            "║  \\ /` \\\\  _.-`:::`-._  //    ║\n" +
+            "║   `    \\|`    :::    `|/     ║\n" +
+            "║         |     :::     |      ║\n" +
+            "║         |.....:::.....|      ║\n" +
+            "║         |:::::::::::::|      ║\n" +
+            "║         |     :::     |      ║\n" +
+            "║         \\     :::     /      ║\n" +
+            "║          \\    :::    /       ║\n" +
+            "║           `-. ::: .-'        ║\n" +
+            "║            //`:::`\\\\         ║\n" +
+            "║           //   '   \\\\        ║\n" +
+            "║          |/         \\\\       ║\n" +
+            "║                              ║\n" +
+            "╚══════════════════════════════╝";
+
+    String vLetter = "8b           d8\n" +
+            "`8b         d8'\n" +
+            " `8b       d8' \n" +
+            "  `8b     d8'  \n" +
+            "   `8b   d8'   \n" +
+            "    `8b d8'    \n" +
+            "     `888'     \n" +
+            "      `8'      ";
+
+    String sLetter = " ad88888ba \n" +
+            "d8\"     \"8b\n" +
+            "Y8,        \n" +
+            "`Y8aaaaa,  \n" +
+            "  `\"\"\"\"\"8b,\n" +
+            "        `8b\n" +
+            "Y8a     a8P\n" +
+            " \"Y88888P\" ";
 }
