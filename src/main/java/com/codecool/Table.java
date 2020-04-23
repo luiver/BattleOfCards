@@ -79,72 +79,64 @@ public class Table {
     private void dealerVsPlayer(){
         Player dealer = getPlayerList().get(0);
         Player player = getPlayerList().get(1);
-        Hand dealerHand = dealer.getHand();
-        Hand playerHand = player.getHand();
-        boolean hasDealerCards = dealerHand.getIterator().hasNext();
-        boolean hasPlayerCards = playerHand.getIterator().hasNext();
-        String result;
-//        Player currentPlayer = dealer;
-//        Player opponentPlayer = player;
+        boolean hasDealerCards = dealer.getHand().getIterator().hasNext();
+        boolean hasPlayerCards = player.getHand().getIterator().hasNext();
+        String resultOfGame;
         Player currentPlayer = player;
         Player opponentPlayer = dealer;
-
         while (hasDealerCards && hasPlayerCards){
-            Card currentPlayerTopCard = currentPlayer.getTopCard();
-            Card opponentPlayerTopCard = opponentPlayer.getTopCard();
             List<Card> cardsInPlay = new ArrayList<>();
-            cardsInPlay.add(currentPlayerTopCard);
-            cardsInPlay.add(opponentPlayerTopCard);
-
+            cardsInPlay.add(currentPlayer.getTopCard());
+            cardsInPlay.add(opponentPlayer.getTopCard());
             printTable(currentPlayer,opponentPlayer, false, true);
-
-            printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
-
+            //printTopCards(currentPlayer, opponentPlayer); //todo function for debug delete after proper function added
             String choosenStat = currentPlayer.chooseCardStatToCompare();
             printTable(currentPlayer,opponentPlayer, true, false);
-
             int resultOfCompare = comparePlayersTopCards(choosenStat, currentPlayer, opponentPlayer);
             printResultOfCompare(resultOfCompare, currentPlayer, opponentPlayer);
-            if (resultOfCompare == 0) {
-                addCardsToSideCards(cardsInPlay);
-                currentPlayer.removeTopCard();
-                opponentPlayer.removeTopCard();
-            } else {
-                //todo whoTakesCards(currentPlayer, opponentPlayer, resultOfCompare); //create separate method
-                if (resultOfCompare > 0) {
-                    currentPlayer.addCardsToBottomOfHand(cardsInPlay);
-                    currentPlayer.removeTopCard();
-                    opponentPlayer.removeTopCard();
-                    if (sideCards.size() != 0) {
-                        currentPlayer.addCardsToBottomOfHand(sideCards);
-                        sideCards.clear();
-                    }
+            boolean isSwitch = doSwitchPlayers( currentPlayer,  opponentPlayer,  resultOfCompare, cardsInPlay);
+            if (isSwitch) {
+                if (currentPlayer == dealer){
+                    currentPlayer = player;
+                    opponentPlayer = dealer;
                 } else {
-                    opponentPlayer.addCardsToBottomOfHand(cardsInPlay);
-                    currentPlayer.removeTopCard();
-                    opponentPlayer.removeTopCard();
-                    if (sideCards.size() != 0) {
-                        opponentPlayer.addCardsToBottomOfHand(sideCards);
-                        sideCards.clear();
-                    }
-                    //todo switchPlayers(currentPlayer, opponentPlayer);  //create separate method
-                    if (currentPlayer == dealer){
-                        currentPlayer = player;
-                        opponentPlayer = dealer;
-                    } else {
-                        currentPlayer = dealer;
-                        opponentPlayer = player;
-                    }
+                    currentPlayer = dealer;
+                    opponentPlayer = player;
                 }
             }
-            hasDealerCards = dealerHand.getIterator().hasNext();
-            hasPlayerCards = playerHand.getIterator().hasNext();
+            hasDealerCards = dealer.getHand().getIterator().hasNext();
+            hasPlayerCards = player.getHand().getIterator().hasNext();
             printTable(currentPlayer,opponentPlayer, false, false);
             printEndTurn();
         }
-        result = !hasPlayerCards ? dealer.getName() : player.getName();
-        System.out.println("The Winner is: " + result);
+        resultOfGame = !hasPlayerCards ? dealer.getName() : player.getName();
+        System.out.println("The Winner is: " + resultOfGame);
+    }
 
+    private boolean doSwitchPlayers(Player currentPlayer, Player opponentPlayer, int resultOfCompare, List<Card> cardsInPlay) {
+        if (resultOfCompare == 0) {
+            addCardsToSideCards(cardsInPlay);
+            currentPlayer.removeTopCard();
+            opponentPlayer.removeTopCard();
+        } else {
+            if (resultOfCompare > 0) {
+                currentPlayer.addCardsToBottomOfHand(cardsInPlay);
+                currentPlayer.removeTopCard();
+                opponentPlayer.removeTopCard();
+                if (sideCards.size() != 0) {
+                    currentPlayer.addCardsToBottomOfHand(sideCards);
+                    sideCards.clear();
+                }return false;
+            } else {
+                opponentPlayer.addCardsToBottomOfHand(cardsInPlay);
+                currentPlayer.removeTopCard();
+                opponentPlayer.removeTopCard();
+                if (sideCards.size() != 0) {
+                    opponentPlayer.addCardsToBottomOfHand(sideCards);
+                    sideCards.clear();
+                }return true;
+            }
+        }return false;
     }
 
     private void printEndTurn(){
@@ -162,7 +154,6 @@ public class Table {
             System.out.println(op.name+" wins that round, and gather all cards");
         }
         Scanner scanner = new Scanner(System.in);
-
         scanner.nextLine();
     }
 
@@ -189,6 +180,7 @@ public class Table {
     }
 
     private void printTable(Player currentPlayer, Player opponentPlayer, boolean isVisibleForBoth, boolean singleDisplay) {
+        clearScreen();
         String cpCardToDisplay;
         String opCardToDisplay;
         Player dealer = playerList.get(0);
@@ -305,5 +297,10 @@ public class Table {
         for (Card card : cardsInPlay) {
             sideCards.add(card);
         }
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
