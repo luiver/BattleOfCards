@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class Dealer extends Player {
     Dealer() {
-        super();
         name = "Dealer";
     }
 
